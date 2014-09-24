@@ -17,6 +17,7 @@ usage() {
     exit 1
 }
 
+JAVA_OPTS="-Dspring.profiles.active=prod"
 NEXUS_URL="${RD_OPTION_NEXUSURL:-$NEXUS_URL}"
 GROUP_ID="${RD_OPTION_GROUPID:-$1}"
 ARTIFACT_ID="${RD_OPTION_ARTIFACTID:-$2}"
@@ -42,4 +43,14 @@ ARTIFACT_URL="${NEXUS_URL}/${GROUP_ID/.//}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_
 mkdir -p /srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}
 
 wget ${ARTIFACT_URL} -O /srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.jar 
+
+# run microservice
+
+if [[ -f "/srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.pid" ]]; then
+	# kill it
+	kill -9 $( cat "/srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.pid" )
+fi
+
+nohup java ${JAVA_OPTS} -jar /srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.jar 2>&1 >/dev/null &
+echo $! > "/srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.pid"
 
