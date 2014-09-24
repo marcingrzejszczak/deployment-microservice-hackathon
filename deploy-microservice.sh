@@ -57,6 +57,6 @@ fi
 
 cd ${APP_DIR}
 
-nohup java ${JAVA_OPTS} -jar ${JAR_FILE} 2>&1 >/dev/null &
+exec nohup java ${JAVA_OPTS} -jar ${JAR_FILE} 2>&1 >/dev/null &
 echo $! > "${ARTIFACT_ID}.pid"
 
