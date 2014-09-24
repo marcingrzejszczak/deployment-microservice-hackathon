@@ -48,8 +48,9 @@ wget ${ARTIFACT_URL} -O ${JAR_FILE}
 # run microservice
 if [[ -f "${APP_DIR}/${ARTIFACT_ID}.pid" ]]; then
 	PID="$( cat ${APP_DIR}/${ARTIFACT_ID}.pid )"
-	# kill iti
-	if [[ ! kill -9 ${PID} > /dev/null 2>&1 ]]; then
+	# kill it
+	kill -9 ${PID} 2>&1 >/dev/null
+	if [[ ! "$?" ]]; then
 		echo "No process killed"
 	fi
 fi
