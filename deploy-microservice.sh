@@ -42,15 +42,17 @@ ARTIFACT_URL="${NEXUS_URL}/${GROUP_ID/.//}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_
 
 mkdir -p /srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}
 
-wget ${ARTIFACT_URL} -O /srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.jar 
+APP_DIR="/srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}"
+JAR_FILE="${APP_DIR}/${ARTIFACT_ID}.jar"
+
+wget ${ARTIFACT_URL} -O ${JAR_FILE}
 
 # run microservice
-
-if [[ -f "/srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.pid" ]]; then
+if [[ -f "${APP_DIR}/${ARTIFACT_ID}.pid" ]]; then
 	# kill it
-	kill -9 $( cat "/srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.pid" )
+	kill -9 $( cat "${APP_DIR}/${ARTIFACT_ID}.pid" )
 fi
 
-nohup java ${JAVA_OPTS} -jar /srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.jar 2>&1 >/dev/null &
-echo $! > "/srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.pid"
+cd ${APP_DIR} && nohup java ${JAVA_OPTS} -jar ${JAR_FILE} 2>&1 >/dev/null &
+echo $! > "${APP_DIR}/${ARTIFACT_ID}.pid"
 
