@@ -2,8 +2,6 @@
 
 [[ -z $DEBUG ]] || set -o xtrace
 
-set -o errexit
-
 log() {
     echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@"
 }
