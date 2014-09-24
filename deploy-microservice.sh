@@ -53,6 +53,8 @@ if [[ -f "${APP_DIR}/${ARTIFACT_ID}.pid" ]]; then
 	kill -9 $( cat "${APP_DIR}/${ARTIFACT_ID}.pid" )
 fi
 
-cd ${APP_DIR} && nohup java ${JAVA_OPTS} -jar ${JAR_FILE} 2>&1 >/dev/null &
-echo $! > "${APP_DIR}/${ARTIFACT_ID}.pid"
+cd ${APP_DIR}
+
+nohup java ${JAVA_OPTS} -jar ${JAR_FILE} 2>&1 >/dev/null &
+echo $! > "${ARTIFACT_ID}.pid"
 
