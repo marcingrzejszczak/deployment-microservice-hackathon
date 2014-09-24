@@ -39,7 +39,7 @@ fi
 
 ARTIFACT_URL="${NEXUS_URL}/${GROUP_ID/.//}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}.jar"
 
-mkdir -p /srv/deploy/${{GROUP_ID/.//}/${ARTIFACT_ID}
+mkdir -p /srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}
 
-wget ${ARTIFACT_URL} -O /srv/deploy/${{GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.jar 
+wget ${ARTIFACT_URL} -O /srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}/${ARTIFACT_ID}.jar 
 
