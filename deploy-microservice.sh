@@ -48,15 +48,14 @@ wget ${ARTIFACT_URL} -O ${JAR_FILE}
 # run microservice
 if [[ -f "${APP_DIR}/${ARTIFACT_ID}.pid" ]]; then
 	PID="$( cat ${APP_DIR}/${ARTIFACT_ID}.pid )"
-	# kill it
-	kill -9 ${PID} 2>&1 >/dev/null
-	if [[ ! "$?" ]]; then
+	log "Killing ${PID}..."
+	if ! kill -9 ${PID} ; then
 		echo "No process killed"
 	fi
 fi
 
+log "Starting ${JAR_FILE}"
 cd ${APP_DIR}
-
 exec nohup java ${JAVA_OPTS} -jar ${JAR_FILE} </dev/null &>/dev/null &
 echo $! > "${ARTIFACT_ID}.pid"
 
