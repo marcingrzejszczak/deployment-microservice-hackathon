@@ -36,7 +36,7 @@ if [[ -z "${VERSION}" ]]; then
     usage
 fi
 
-ARTIFACT_URL="${NEXUS_URL}/${GROUP_ID/.//}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}.jar"
+ARTIFACT_URL="${NEXUS_URL}/${GROUP_ID//.//}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}.jar"
 
 mkdir -p /srv/deploy/${GROUP_ID/.//}/${ARTIFACT_ID}
 
